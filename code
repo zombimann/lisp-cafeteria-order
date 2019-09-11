@@ -1,0 +1,93 @@
+(defun Pizza(sale-number size toppings contacts) 
+
+(setf pizza-size size)
+(setf pizza-toppings (append toppings '(tomato-base cheese)))
+
+
+(case pizza-size
+('small (setf pizza-cost 5))
+('medium (setf pizza-cost 8))
+('large (setf pizza-cost 12))
+)
+
+
+
+(loop for n in pizza-toppings
+
+do (case n
+('bacon (setf pizza-cost (+ pizza-cost 1)))
+('olives (setf pizza-cost (+ pizza-cost 1)))
+('ham (setf pizza-cost (+ pizza-cost 1)))
+('mushrooms (setf pizza-cost (+ pizza-cost 1)))
+('pineapple (setf pizza-cost (+ pizza-cost 1)))
+('salami (setf pizza-cost (+ pizza-cost 1)))
+('anchovies (setf pizza-cost (+ pizza-cost 1)))
+)
+)
+
+(case (list-length contacts)
+(3 (setf status 'delivered))
+(2 (setf status 'delivered))
+)
+
+(if (and (eq status 'delivered) (< pizza-cost 30))
+(setf pizza-cost (+ pizza-cost 8))
+)
+
+(values (list sale-number pizza-cost status contacts))
+
+)
+
+(defstruct sale
+details
+cost
+name
+address
+phone-number
+)
+
+
+; TEST CASES
+(setf jj 0)
+(loop
+(princ "Please input the pizza size: ")
+ (setf s (read))
+ 
+ (princ "Please type the list of toppings with spaces: ")
+ (setf top (list (read)))
+ 
+ (princ "Please type the name of customer: ")
+ (setf n (read))
+ 
+ (princ "Please type the phone number of customer: ")
+ (setf p (read))
+ 
+ (princ "Please type the address of customer: ")
+ (setf a (list (read)))
+ 
+ (setf det (list n p a))
+
+(setf val (Pizza 'sale1 s top '(zombi (3645 juja) 07354424)))
+
+ (setf sale-no (nth 0 val))
+ (setf stat (nth 2 val))
+ (setf pri (nth 1 val))
+ (setf nam (nth 0 (nth 3 val)))
+ (setf addre (nth 1 (nth 3 val)))
+ (setf numb(nth 2 (nth 3 val)))
+
+( setq sale-no (make-sale 
+:details stat
+:cost pri
+:name nam
+:address addre
+:phone-number numb
+)
+)
+
+(write sale-no)
+(terpri)
+
+(setf jj (+ jj 1))
+(when (> jj 4) (return jj))
+)
